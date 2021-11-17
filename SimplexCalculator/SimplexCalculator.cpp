@@ -4,7 +4,8 @@
 * and Linear Algebra course.
    
 * Author - Noah Ratzburg
-* Date - 11/17/2021
+* Begin Date - 11/17/2021
+* End Date - TBD
 */
 
 #include <iostream>
@@ -129,7 +130,7 @@ void fillTableau(double** tableau, int rows, int cols)
 int main()
 {
     int running = 1;
-    
+
     double** tableau;
     string* colLabels;
     string* rowLabels;
@@ -138,32 +139,36 @@ int main()
     int cols = -1;
     int num_vars = -1;
 
-    while ( rows < 0 && cols < 0 && num_vars < 0 )
+    while(running == 1)
     {
-        cout << "{ Enter number of rows in initial tableau } ";
-        cin >> rows;
-        cout << "{ Enter number of columns in initial tableau } ";
-        cin >> cols;
-        cout << "{ Enter number of variables } ";
-        cin >> num_vars;
+        while (rows < 0 && cols < 0 && num_vars < 0)
+        {
+            cout << "{ Enter number of rows in initial tableau } ";
+            cin >> rows;
+            cout << "{ Enter number of columns in initial tableau } ";
+            cin >> cols;
+            cout << "{ Enter number of variables } ";
+            cin >> num_vars;
 
-        cout << endl;
+            cout << endl;
 
-        if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << endl;
-        if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << endl;
-        if (num_vars < 0) cout << "~# NUMBER OF VARIABLES MUST BE POSITIVE #~" << endl;
+            if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << endl;
+            if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << endl;
+            if (num_vars < 0) cout << "~# NUMBER OF VARIABLES MUST BE POSITIVE #~" << endl;
+        }
+
+        tableau = generateInitialTableau(rows, cols);
+        rowLabels = generateRowLabels(rows);
+        colLabels = generateColumnLabels(cols, num_vars);
+
+        printTableau(tableau, rowLabels, colLabels, rows, cols);
+
+        fillTableau(tableau, rows, cols);
+        printTableau(tableau, rowLabels, colLabels, rows, cols);
+
+        cout << "{ Press <1> to continue | Press <0> to exit }" << endl;
+        cin >> running;
     }
-
-    tableau = generateInitialTableau(rows, cols);
-    rowLabels = generateRowLabels(rows);
-    colLabels = generateColumnLabels(cols, num_vars);
-
-    printTableau(tableau, rowLabels, colLabels, rows, cols);
-
-    fillTableau(tableau, rows, cols);
-    printTableau(tableau, rowLabels, colLabels, rows, cols);
-
-    cout << "Creating initial tableau | Rows " << rows << " | Columns " << cols << " | Variables " << num_vars << endl;
     
     int i;
     for (i = 0; i < rows; i++)
