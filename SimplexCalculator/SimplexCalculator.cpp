@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <float.h>
 
 using std::cin; 
 using std::cout; 
@@ -54,9 +55,9 @@ string* generateRowLabels(int rows)
     string* rowLabels = new string[rows];
     for (i = 0; i < rows - 1; i++)
     {
-        rowLabels[i] = ("s" + to_string(i));
+        rowLabels[i] = ("s" + to_string(i + 1));
     }
-    rowLabels[rows - 1] = "RESULTS";
+    rowLabels[rows - 1] = "P";
     return rowLabels;
 }
 
@@ -67,7 +68,7 @@ string* generateColumnLabels(int cols, int num_vars)
 {
     int i, j = 1, z = num_vars;
     string* colLabels = new string[cols];
-    for (i = 0; i < cols - 1; i++)
+    for (i = 0; i < cols - 2; i++)
     {
         if (z != 0)
         {
@@ -80,6 +81,7 @@ string* generateColumnLabels(int cols, int num_vars)
             j++;
         }
     }
+    colLabels[cols - 2] = "P";
     colLabels[cols - 1] = "RESULTS";
     return colLabels;
 }
@@ -106,13 +108,17 @@ void printTableau(double** tableau, string* rowLabels, string* colLabels, int ro
         cout << setw(10) << rowLabels[i];
         for (j = 0; j < cols; j++)
         {
-           cout << setw(10) << setprecision(10) << tableau[i][j] << " ";
+           cout << setw(10) << setprecision(3) << tableau[i][j] << " ";
         }
         cout << endl;
     }
     cout << endl;
 }
 
+/*
+* Function that takes user input to fill the tableau after initializing
+* it. No error handling at the moment.
+*/
 void fillTableau(double** tableau, int rows, int cols)
 {
     int i, j;
@@ -124,6 +130,72 @@ void fillTableau(double** tableau, int rows, int cols)
             cin >> tableau[i][j];
         }
         cout << endl;
+    }
+}
+
+/*
+* Computes the entry index to be used in reducing the tableau.
+*/
+int getEntryIndex(double** tableau, int rows, int cols)
+{
+    int i;
+    int j = -1;
+    double tmp = 0.0;
+    for (i = 0; i < cols - 1; i++)
+    {
+        if (tableau[rows - 1][i] < 0)
+        {
+            tmp = tableau[rows - 1][i];
+            break;
+        }
+    }
+    for (i = 0; i < cols - 1; i++)
+    {
+        if (tableau[rows - 1][i] <= tmp)
+        {
+            tmp = tableau[rows - 1][i];
+            j = i;
+        }
+    }
+    return j;
+}
+
+/*
+* Computes the exit index to be used in reducing the tableau.
+*/
+int getExitIndex(double** tableau, int rows, int cols, int entry)
+{
+    int i;
+    int j = -1;
+    double tmp = DBL_MAX;
+    for (i = 0; i < rows - 1; i++)
+    {
+        if (tableau[i][cols - 1] / tableau[i][entry] < tmp)
+        {
+            tmp = tableau[i][cols - 1] / tableau[i][entry];
+            j = i;
+        }
+    }
+    return j;
+}
+
+void computeTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
+{
+    bool running = true;
+    double tmp = 0.0;
+    while (running)
+    {
+        int entry = getEntryIndex(tableau, rows, cols);
+        int exit = getExitIndex(tableau, rows, cols, entry);
+        double divisor = tableau[exit][entry];
+
+        rowLabels[exit] = colLabels[entry];
+
+        for (int i = 0; i < cols; i++)
+        {
+            tableau[exit][i] = tableau[exit][i] / divisor;
+        }
+        break;
     }
 }
 
@@ -161,10 +233,14 @@ int main()
         rowLabels = generateRowLabels(rows);
         colLabels = generateColumnLabels(cols, num_vars);
 
-        printTableau(tableau, rowLabels, colLabels, rows, cols);
-
         fillTableau(tableau, rows, cols);
-        printTableau(tableau, rowLabels, colLabels, rows, cols);
+        computeTableau(tableau, rowLabels, colLabels, rows, cols);
+        
+        system("cls");
+        printTableau(tableau, rowLabels, colLabels, rows, cols); 
+        rows = -1;
+        cols = -1;
+        num_vars = -1;
 
         cout << "{ Press <1> to continue | Press <0> to exit }" << endl;
         cin >> running;
