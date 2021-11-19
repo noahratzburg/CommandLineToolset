@@ -149,6 +149,10 @@ int getEntryIndex(double** tableau, int rows, int cols)
             break;
         }
     }
+
+    /* If no negative was found */
+    if (i == cols - 1 && tableau[rows - 1][i] >= 0) return -1;
+    
     for (i = 0; i < cols - 1; i++)
     {
         if (tableau[rows - 1][i] <= tmp)
@@ -181,21 +185,36 @@ int getExitIndex(double** tableau, int rows, int cols, int entry)
 
 void computeTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
 {
+    int i, j;
     bool running = true;
-    double tmp = 0.0;
-    while (running)
+    double divisor = 0.0;
+    double multiplier = 0.0;
+    int entry = getEntryIndex(tableau, rows, cols);
+    while (entry != -1)
     {
-        int entry = getEntryIndex(tableau, rows, cols);
         int exit = getExitIndex(tableau, rows, cols, entry);
-        double divisor = tableau[exit][entry];
+        divisor = tableau[exit][entry];
 
         rowLabels[exit] = colLabels[entry];
 
-        for (int i = 0; i < cols; i++)
+        /* Divides entire exit row by tableau[exit][entry] */
+        for (i = 0; i < cols; i++)
         {
             tableau[exit][i] = tableau[exit][i] / divisor;
         }
-        break;
+
+        for (i = 0; i < rows; i++)
+        {
+            if (i != exit)
+            {
+                multiplier = -1 * tableau[i][entry];
+                for (j = 0; j < cols; j++)
+                {
+                    tableau[i][j] = tableau[i][j] + (tableau[exit][j] * multiplier);
+                }
+            }
+        }
+        entry = getEntryIndex(tableau, rows, cols);
     }
 }
 
