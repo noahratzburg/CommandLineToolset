@@ -270,9 +270,11 @@ int main()
         rows = -1;
         cols = -1;
         num_vars = -1;
-
-        cout << "{ Press <1> to continue | Press <0> to exit }" << endl;
-        cin >> running;
+       
+        while (running != 0 && running != 1)
+        {
+            running = inputNumber("{ Press <1> to continue | Press <0> to exit }");
+        }
     }
     
     int i;
