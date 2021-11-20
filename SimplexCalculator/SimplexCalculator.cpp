@@ -23,6 +23,9 @@ using std::setprecision;
 using std::to_string;
 using std::regex;
 
+/*
+* Returns an integer input using regular expressions to verify user input.
+*/
 int inputNumber(string msg)
 {
     string str;
@@ -85,7 +88,7 @@ string* generateColumnLabels(int cols, int num_vars)
     {
         if (z != 0)
         {
-            colLabels[i] = ("x" + to_string(i));
+            colLabels[i] = ("x" + to_string(i + 1));
             z--;
         }
         else
@@ -121,7 +124,7 @@ void printTableau(double** tableau, string* rowLabels, string* colLabels, int ro
         cout << setw(10) << rowLabels[i];
         for (j = 0; j < cols; j++)
         {
-           cout << setw(10) << setprecision(3) << tableau[i][j] << " ";
+           cout << setw(10) << setprecision(3) << std::fixed << tableau[i][j] << " ";
         }
         cout << endl;
     }
@@ -137,12 +140,12 @@ void fillTableau(double** tableau, int rows, int cols)
     int i, j;
     for (i = 0; i < rows; i++)
     {
-        cout << "{ Begin filling for Row " << i << " left to right }" << endl;
+        cout << "{ Begin filling for Row " << i + 1 << " left to right }" << endl;
         for (j = 0; j < cols; j++)
         {
             tableau[i][j] = inputNumber("");
         }
-        cout << endl;
+        system("cls");
     }
 }
 
@@ -251,8 +254,7 @@ int main()
             cols = inputNumber("{ Enter number of columns in initial tableau } ");
             num_vars = inputNumber("{ Enter number of variables } ");
 
-            cout << endl;
-
+            system("cls");
             if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << endl;
             if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << endl;
             if (num_vars < 0) cout << "~# NUMBER OF VARIABLES MUST BE POSITIVE #~" << endl;
@@ -270,18 +272,17 @@ int main()
         rows = -1;
         cols = -1;
         num_vars = -1;
-       
-        while (running != 0 && running != 1)
-        {
-            running = inputNumber("{ Press <1> to continue | Press <0> to exit }");
-        }
+
+        running = inputNumber("{ Press <1> to continue | Press <any other #> to exit } ");
+        system("cls");
+        
+        int i;
+        for (i = 0; i < rows; i++)
+            delete[] tableau[i];
+        delete[] tableau;
+        delete[] colLabels;
+        delete[] rowLabels;
     }
     
-    int i;
-    for (i = 0; i < rows; i++)
-        delete[] tableau[i];
-    delete[] tableau;
-    delete[] colLabels;
-    delete[] rowLabels;
     return 1;
 }
