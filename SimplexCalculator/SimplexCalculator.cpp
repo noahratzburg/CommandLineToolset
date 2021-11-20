@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <regex>
 #include <float.h>
 
 using std::cin; 
@@ -20,7 +21,22 @@ using std::string;
 using std::setw;
 using std::setprecision;
 using std::to_string;
+using std::regex;
 
+/*
+* Returns an integer input using regular expressions to verify user input.
+*/
+int inputNumber(string msg)
+{
+    string str;
+    regex regex_pattern("-?[0-9]+");
+    while (!regex_match(str, regex_pattern))
+    {
+        cout << msg;
+        cin >> str;
+    }
+    return stoi(str);
+}
 /* 
 * Generates the 2-dimentional array that will be used to store
 * the initial tableau of the simplex problem.
@@ -72,7 +88,7 @@ string* generateColumnLabels(int cols, int num_vars)
     {
         if (z != 0)
         {
-            colLabels[i] = ("x" + to_string(i));
+            colLabels[i] = ("x" + to_string(i + 1));
             z--;
         }
         else
@@ -108,7 +124,7 @@ void printTableau(double** tableau, string* rowLabels, string* colLabels, int ro
         cout << setw(10) << rowLabels[i];
         for (j = 0; j < cols; j++)
         {
-           cout << setw(10) << setprecision(3) << tableau[i][j] << " ";
+           cout << setw(10) << setprecision(3) << std::fixed << tableau[i][j] << " ";
         }
         cout << endl;
     }
@@ -124,12 +140,12 @@ void fillTableau(double** tableau, int rows, int cols)
     int i, j;
     for (i = 0; i < rows; i++)
     {
-        cout << "{ Begin filling for Row " << i << " left to right }" << endl;
+        cout << "{ Begin filling for Row " << i + 1 << " left to right }" << endl;
         for (j = 0; j < cols; j++)
         {
-            cin >> tableau[i][j];
+            tableau[i][j] = inputNumber("");
         }
-        cout << endl;
+        system("cls");
     }
 }
 
@@ -234,15 +250,11 @@ int main()
     {
         while (rows < 0 && cols < 0 && num_vars < 0)
         {
-            cout << "{ Enter number of rows in initial tableau } ";
-            cin >> rows;
-            cout << "{ Enter number of columns in initial tableau } ";
-            cin >> cols;
-            cout << "{ Enter number of variables } ";
-            cin >> num_vars;
+            rows = inputNumber("{ Enter number of rows in initial tableau } ");
+            cols = inputNumber("{ Enter number of columns in initial tableau } ");
+            num_vars = inputNumber("{ Enter number of variables } ");
 
-            cout << endl;
-
+            system("cls");
             if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << endl;
             if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << endl;
             if (num_vars < 0) cout << "~# NUMBER OF VARIABLES MUST BE POSITIVE #~" << endl;
@@ -261,15 +273,16 @@ int main()
         cols = -1;
         num_vars = -1;
 
-        cout << "{ Press <1> to continue | Press <0> to exit }" << endl;
-        cin >> running;
+        running = inputNumber("{ Press <1> to continue | Press <any other #> to exit } ");
+        system("cls");
+        
+        int i;
+        for (i = 0; i < rows; i++)
+            delete[] tableau[i];
+        delete[] tableau;
+        delete[] colLabels;
+        delete[] rowLabels;
     }
     
-    int i;
-    for (i = 0; i < rows; i++)
-        delete[] tableau[i];
-    delete[] tableau;
-    delete[] colLabels;
-    delete[] rowLabels;
     return 1;
 }
