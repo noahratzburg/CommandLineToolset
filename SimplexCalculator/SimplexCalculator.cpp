@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <regex>
 #include <float.h>
 
 using std::cin; 
@@ -20,7 +21,19 @@ using std::string;
 using std::setw;
 using std::setprecision;
 using std::to_string;
+using std::regex;
 
+int inputNumber(string msg)
+{
+    string str;
+    regex regex_pattern("-?[0-9]+");
+    while (!regex_match(str, regex_pattern))
+    {
+        cout << msg;
+        cin >> str;
+    }
+    return stoi(str);
+}
 /* 
 * Generates the 2-dimentional array that will be used to store
 * the initial tableau of the simplex problem.
@@ -127,7 +140,7 @@ void fillTableau(double** tableau, int rows, int cols)
         cout << "{ Begin filling for Row " << i << " left to right }" << endl;
         for (j = 0; j < cols; j++)
         {
-            cin >> tableau[i][j];
+            tableau[i][j] = inputNumber("");
         }
         cout << endl;
     }
@@ -234,12 +247,9 @@ int main()
     {
         while (rows < 0 && cols < 0 && num_vars < 0)
         {
-            cout << "{ Enter number of rows in initial tableau } ";
-            cin >> rows;
-            cout << "{ Enter number of columns in initial tableau } ";
-            cin >> cols;
-            cout << "{ Enter number of variables } ";
-            cin >> num_vars;
+            rows = inputNumber("{ Enter number of rows in initial tableau } ");
+            cols = inputNumber("{ Enter number of columns in initial tableau } ");
+            num_vars = inputNumber("{ Enter number of variables } ");
 
             cout << endl;
 
