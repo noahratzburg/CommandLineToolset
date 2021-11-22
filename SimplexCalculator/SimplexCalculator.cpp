@@ -14,6 +14,8 @@
 #include <regex>
 #include <float.h>
 
+#include "SimplexCalculator.hpp"
+
 using std::cin; 
 using std::cout; 
 using std::endl; 
@@ -23,10 +25,60 @@ using std::setprecision;
 using std::to_string;
 using std::regex;
 
+SimplexCalculator::SimplexCalculator()
+{
+    int running = 1;
+
+    double** tableau;
+    string* colLabels;
+    string* rowLabels;
+
+    int rows = -1;
+    int cols = -1;
+    int num_vars = -1;
+
+    while (running == 1)
+    {
+        while (rows < 0 && cols < 0 && num_vars < 0)
+        {
+            rows = inputNumber("{ Enter number of rows in initial tableau } ");
+            cols = inputNumber("{ Enter number of columns in initial tableau } ");
+            num_vars = inputNumber("{ Enter number of variables } ");
+
+            system("cls");
+            if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << endl;
+            if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << endl;
+            if (num_vars < 0) cout << "~# NUMBER OF VARIABLES MUST BE POSITIVE #~" << endl;
+        }
+
+        tableau = generateInitialTableau(rows, cols);
+        rowLabels = generateRowLabels(rows);
+        colLabels = generateColumnLabels(cols, num_vars);
+
+        fillTableau(tableau, rows, cols);
+        computeTableau(tableau, rowLabels, colLabels, rows, cols);
+
+        system("cls");
+        printTableau(tableau, rowLabels, colLabels, rows, cols);
+        rows = -1;
+        cols = -1;
+        num_vars = -1;
+
+        running = inputNumber("{ Press <1> to continue | Press <any other #> to exit } ");
+        system("cls");
+
+        int i;
+        for (i = 0; i < rows; i++)
+            delete[] tableau[i];
+        delete[] tableau;
+        delete[] colLabels;
+        delete[] rowLabels;
+    }
+}
 /*
 * Returns an integer input using regular expressions to verify user input.
 */
-int inputNumber(string msg)
+int SimplexCalculator::inputNumber(string msg)
 {
     string str;
     regex regex_pattern("-?[0-9]+");
@@ -41,7 +93,7 @@ int inputNumber(string msg)
 * Generates the 2-dimentional array that will be used to store
 * the initial tableau of the simplex problem.
 */
-double** generateInitialTableau(int rows, int cols)
+double** SimplexCalculator::generateInitialTableau(int rows, int cols)
 {
     int i, j;
     double** tableau;
@@ -65,7 +117,7 @@ double** generateInitialTableau(int rows, int cols)
 /*
 * Generates the labels for the rows
 */
-string* generateRowLabels(int rows)
+string* SimplexCalculator::generateRowLabels(int rows)
 {
     int i;
     string* rowLabels = new string[rows];
@@ -80,7 +132,7 @@ string* generateRowLabels(int rows)
 /*
 * Generates the labels for the columns
 */
-string* generateColumnLabels(int cols, int num_vars)
+string* SimplexCalculator::generateColumnLabels(int cols, int num_vars)
 {
     int i, j = 1, z = num_vars;
     string* colLabels = new string[cols];
@@ -105,7 +157,7 @@ string* generateColumnLabels(int cols, int num_vars)
 /*
 * Prints the tableau to terminal.
 */
-void printTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
+void SimplexCalculator::printTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
 {
     cout << "{ Resulting Tableau }" << endl;
     int i, j;
@@ -135,7 +187,7 @@ void printTableau(double** tableau, string* rowLabels, string* colLabels, int ro
 * Function that takes user input to fill the tableau after initializing
 * it. No error handling at the moment.
 */
-void fillTableau(double** tableau, int rows, int cols)
+void SimplexCalculator::fillTableau(double** tableau, int rows, int cols)
 {
     int i, j;
     for (i = 0; i < rows; i++)
@@ -152,7 +204,7 @@ void fillTableau(double** tableau, int rows, int cols)
 /*
 * Computes the entry index to be used in reducing the tableau.
 */
-int getEntryIndex(double** tableau, int rows, int cols)
+int SimplexCalculator::getEntryIndex(double** tableau, int rows, int cols)
 {
     int i;
     int j = -1;
@@ -183,7 +235,7 @@ int getEntryIndex(double** tableau, int rows, int cols)
 /*
 * Computes the exit index to be used in reducing the tableau.
 */
-int getExitIndex(double** tableau, int rows, int cols, int entry)
+int SimplexCalculator::getExitIndex(double** tableau, int rows, int cols, int entry)
 {
     int i;
     int j = -1;
@@ -199,7 +251,7 @@ int getExitIndex(double** tableau, int rows, int cols, int entry)
     return j;
 }
 
-void computeTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
+void SimplexCalculator::computeTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
 {
     int i, j;
     bool running = true;
@@ -234,55 +286,7 @@ void computeTableau(double** tableau, string* rowLabels, string* colLabels, int 
     }
 }
 
-int main()
+SimplexCalculator::~SimplexCalculator()
 {
-    int running = 1;
 
-    double** tableau;
-    string* colLabels;
-    string* rowLabels;
-
-    int rows = -1;
-    int cols = -1;
-    int num_vars = -1;
-
-    while(running == 1)
-    {
-        while (rows < 0 && cols < 0 && num_vars < 0)
-        {
-            rows = inputNumber("{ Enter number of rows in initial tableau } ");
-            cols = inputNumber("{ Enter number of columns in initial tableau } ");
-            num_vars = inputNumber("{ Enter number of variables } ");
-
-            system("cls");
-            if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << endl;
-            if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << endl;
-            if (num_vars < 0) cout << "~# NUMBER OF VARIABLES MUST BE POSITIVE #~" << endl;
-        }
-
-        tableau = generateInitialTableau(rows, cols);
-        rowLabels = generateRowLabels(rows);
-        colLabels = generateColumnLabels(cols, num_vars);
-
-        fillTableau(tableau, rows, cols);
-        computeTableau(tableau, rowLabels, colLabels, rows, cols);
-        
-        system("cls");
-        printTableau(tableau, rowLabels, colLabels, rows, cols); 
-        rows = -1;
-        cols = -1;
-        num_vars = -1;
-
-        running = inputNumber("{ Press <1> to continue | Press <any other #> to exit } ");
-        system("cls");
-        
-        int i;
-        for (i = 0; i < rows; i++)
-            delete[] tableau[i];
-        delete[] tableau;
-        delete[] colLabels;
-        delete[] rowLabels;
-    }
-    
-    return 1;
 }
