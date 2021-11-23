@@ -31,21 +31,21 @@ void displayPage()
     switch (page)
     {
     case 0:
-        cout << setw(1) << "(1) : Simplex Maximization Calculator" << endl;
-        cout << setw(1) << "(2) : N/A" << endl;
-        cout << setw(1) << "(3) : N/A" << endl;
-        cout << setw(1) << "(4) : N/A" << endl;
-        cout << setw(1) << "(5) : N/A" << endl;
-        cout << setw(1) << "(6) : N/A" << endl;
+        cout << setw(1) << "(1) : Simplex Maximization Calculator" << "\n";
+        cout << setw(1) << "(2) : N/A" << "\n";
+        cout << setw(1) << "(3) : N/A" << "\n";
+        cout << setw(1) << "(4) : N/A" << "\n";
+        cout << setw(1) << "(5) : N/A" << "\n";
+        cout << setw(1) << "(6) : N/A" << "\n";
         cout << setw(1) << "Page : " << page << endl;
         break;
     default:
-        cout << setw(1) << "(1) : N/A" << endl;
-        cout << setw(1) << "(2) : N/A" << endl;
-        cout << setw(1) << "(3) : N/A" << endl;
-        cout << setw(1) << "(4) : N/A" << endl;
-        cout << setw(1) << "(5) : N/A" << endl;
-        cout << setw(1) << "(6) : N/A" << endl;
+        cout << setw(1) << "(1) : N/A" << "\n";
+        cout << setw(1) << "(2) : N/A" << "\n";
+        cout << setw(1) << "(3) : N/A" << "\n";
+        cout << setw(1) << "(4) : N/A" << "\n";
+        cout << setw(1) << "(5) : N/A" << "\n";
+        cout << setw(1) << "(6) : N/A" << "\n";
         cout << setw(1) << "Page : " << page << endl;
         break;
     }
@@ -53,16 +53,16 @@ void displayPage()
 
 void display()
 {
-    cout << setw(1) << "##################################################" << endl;
-    cout << setw(1) << "#                                                #" << endl;
-    cout << setw(1) << "#                                                #" << endl;
-    cout << setw(1) << "#                                                #" << endl;
-    cout << setw(1) << "#              COMMAND LINE TOOLSET              #" << endl;
-    cout << setw(1) << "#                                                #" << endl;
-    cout << setw(1) << "#                                                #" << endl;
-    cout << setw(1) << "#                                                #" << endl;
-    cout << setw(1) << "##################################################" << endl;
-    cout << endl;
+    cout << setw(1) << "##################################################" << "\n";
+    cout << setw(1) << "#                                                #" << "\n";
+    cout << setw(1) << "#                                                #" << "\n";
+    cout << setw(1) << "#                                                #" << "\n";
+    cout << setw(1) << "#              COMMAND LINE TOOLSET              #" << "\n";
+    cout << setw(1) << "#                                                #" << "\n";
+    cout << setw(1) << "#                                                #" << "\n";
+    cout << setw(1) << "#                                                #" << "\n";
+    cout << setw(1) << "##################################################" << "\n";
+    cout << "\n";
     displayPage();
     cout << setw(1) << "<-- (7) | (8) -->" << endl;
     cout << setw(1) << "Enter Selection : ";

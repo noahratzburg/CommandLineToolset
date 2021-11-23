@@ -46,8 +46,8 @@ SimplexCalculator::SimplexCalculator()
             num_vars = inputNumber("{ Enter number of variables } ");
 
             system("cls");
-            if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << endl;
-            if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << endl;
+            if (rows < 0) cout << "~# NUMBER OF ROWS MUST BE POSITIVE #~" << "\n";
+            if (cols < 0) cout << "~# NUMBER OF COLUMNS MUST BE POSITIVE #~" << "\n";
             if (num_vars < 0) cout << "~# NUMBER OF VARIABLES MUST BE POSITIVE #~" << endl;
         }
 
@@ -159,7 +159,7 @@ string* SimplexCalculator::generateColumnLabels(int cols, int num_vars)
 */
 void SimplexCalculator::printTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
 {
-    cout << "{ Resulting Tableau }" << endl;
+    cout << "{ Resulting Tableau }" << "\n";
     int i, j;
     
     /* Print column labels */
@@ -178,7 +178,7 @@ void SimplexCalculator::printTableau(double** tableau, string* rowLabels, string
         {
            cout << setw(10) << setprecision(3) << std::fixed << tableau[i][j] << " ";
         }
-        cout << endl;
+        cout << "\n";
     }
     cout << endl;
 }
@@ -192,11 +192,12 @@ void SimplexCalculator::fillTableau(double** tableau, int rows, int cols)
     int i, j;
     for (i = 0; i < rows; i++)
     {
-        cout << "{ Begin filling for Row " << i + 1 << " left to right }" << endl;
+        cout << "{ Begin filling for Row " << i + 1 << " left to right }" << "\n";
         for (j = 0; j < cols; j++)
         {
             tableau[i][j] = inputNumber("");
         }
+        cout << endl;
         system("cls");
     }
 }
