@@ -142,9 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CommandLineToolset.cpp" />
+    <ClCompile Include="PermutationCalculator.cpp" />
     <ClCompile Include="SimplexCalculator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PermutationCalculator.hpp" />
     <ClInclude Include="SimplexCalculator.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

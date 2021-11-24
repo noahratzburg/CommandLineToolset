@@ -16,5 +16,5 @@ private:
 	void fillTableau(double** tableau, int rows, int cols);
 	int getEntryIndex(double** tableau, int rows, int cols);
 	int getExitIndex(double** tableau, int rows, int cols, int entry);
-	void computeTableau(double** tableau, std::string* rowLabels, std::string* colLabels, int rows, int cols);
+	void calculate(double** tableau, std::string* rowLabels, std::string* colLabels, int rows, int cols);
 };

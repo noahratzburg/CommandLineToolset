@@ -4,6 +4,7 @@
 #include <regex>
 
 #include "SimplexCalculator.hpp"
+#include "PermutationCalculator.hpp"
 
 using std::cin; 
 using std::cout; 
@@ -32,7 +33,7 @@ void displayPage()
     {
     case 0:
         cout << setw(1) << "(1) : Simplex Maximization Calculator" << "\n";
-        cout << setw(1) << "(2) : N/A" << "\n";
+        cout << setw(1) << "(2) : Permutation Calculator" << "\n";
         cout << setw(1) << "(3) : N/A" << "\n";
         cout << setw(1) << "(4) : N/A" << "\n";
         cout << setw(1) << "(5) : N/A" << "\n";
@@ -71,6 +72,7 @@ void display()
 void manageSelection(int selection)
 {
     SimplexCalculator* sc = NULL;
+    PermutationCalculator* pc = NULL;
     switch (page)
     {
     case 0:
@@ -82,6 +84,9 @@ void manageSelection(int selection)
             sc->~SimplexCalculator();
             break;
         case 2:
+            system("cls");
+            pc = new PermutationCalculator();
+            pc->~PermutationCalculator();
             break;
         case 3:
             break;

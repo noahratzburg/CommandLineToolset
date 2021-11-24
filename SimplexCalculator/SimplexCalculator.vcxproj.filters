@@ -21,9 +21,15 @@
     <ClCompile Include="CommandLineToolset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PermutationCalculator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimplexCalculator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PermutationCalculator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -56,7 +56,7 @@ SimplexCalculator::SimplexCalculator()
         colLabels = generateColumnLabels(cols, num_vars);
 
         fillTableau(tableau, rows, cols);
-        computeTableau(tableau, rowLabels, colLabels, rows, cols);
+        calculate(tableau, rowLabels, colLabels, rows, cols);
 
         system("cls");
         printTableau(tableau, rowLabels, colLabels, rows, cols);
@@ -252,7 +252,7 @@ int SimplexCalculator::getExitIndex(double** tableau, int rows, int cols, int en
     return j;
 }
 
-void SimplexCalculator::computeTableau(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
+void SimplexCalculator::calculate(double** tableau, string* rowLabels, string* colLabels, int rows, int cols)
 {
     int i, j;
     bool running = true;
