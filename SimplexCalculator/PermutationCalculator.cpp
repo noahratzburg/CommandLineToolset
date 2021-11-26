@@ -46,11 +46,11 @@ int PermutationCalculator::inputNumber(string msg)
     return stoi(str);
 }
 
-unsigned long long int PermutationCalculator::factorial(int n)
+unsigned long long int PermutationCalculator::factorial(int n, int end)
 {
-    unsigned long long int tmp = n;
+    int tmp = n;
     unsigned long long int result = 1;
-    while (tmp != 0)
+    while (tmp != (n - end))
     {
         result *= tmp;
         tmp -= 1;
@@ -61,7 +61,7 @@ unsigned long long int PermutationCalculator::factorial(int n)
 
 unsigned long long int PermutationCalculator::calculate(int n1, int n2)
 {
-    return (factorial(n1)) / (factorial((n1 - n2)));
+    return factorial(n1, n2);
 }
 
 PermutationCalculator::~PermutationCalculator()

@@ -15,6 +15,7 @@ using std::setprecision;
 using std::regex;
 
 int page = 0;
+int running = 1;
 
 int inputNumber()
 {
@@ -65,7 +66,7 @@ void display()
     cout << setw(1) << "##################################################" << "\n";
     cout << "\n";
     displayPage();
-    cout << setw(1) << "<-- (7) | (8) -->" << endl;
+    cout << setw(1) << "<-- (7) | (8) --> | (9) Exit" << endl;
     cout << setw(1) << "Enter Selection : ";
 }
 
@@ -102,6 +103,9 @@ void manageSelection(int selection)
         case 8:
             page += 1; 
             break;
+        case 9:
+            running = -1;
+            break;
         default:
             break;
         }
@@ -115,6 +119,9 @@ void manageSelection(int selection)
         case 8:
             page += 1;
             break;
+        case 9:
+            running = -1;
+            break;
         default:
             break;
         }
@@ -124,7 +131,6 @@ void manageSelection(int selection)
 
 int main()
 {
-    int running = 1;
     int selection = -1;
 
     while (running == 1)
@@ -135,6 +141,8 @@ int main()
             selection = inputNumber();
         }
         manageSelection(selection);
+
+        if (running != 1) break;
 
         selection = -1;
         system("cls");
