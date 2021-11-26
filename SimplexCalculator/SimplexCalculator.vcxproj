@@ -24,6 +24,7 @@
     <ProjectGuid>{dfaf1d77-aa2a-434c-96b0-d1f488ed1168}</ProjectGuid>
     <RootNamespace>SimplexCalculator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SimplexCalculator</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,7 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommandLineToolset.cpp" />
+    <ClCompile Include="PermutationCalculator.cpp" />
     <ClCompile Include="SimplexCalculator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PermutationCalculator.hpp" />
+    <ClInclude Include="SimplexCalculator.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
